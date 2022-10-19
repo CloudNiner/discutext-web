@@ -15,7 +15,7 @@ import discutextApi from "./discutext-api";
 const HEADER_HEIGHT_PX = 80;
 
 const App = () => {
-  const { data, error } = useSWR("PHI", discutextApi.getLatestDiscussion);
+  const { data } = useSWR("PHI", discutextApi.getLatestDiscussion);
   const validAt = data?.valid_at ? new Date(data.valid_at) : undefined;
   return (
     <ChakraProvider>

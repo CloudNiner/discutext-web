@@ -1,12 +1,5 @@
 import React from "react";
-import {
-  Box,
-  Heading,
-  Text,
-  ChakraProvider,
-  HStack,
-  VStack,
-} from "@chakra-ui/react";
+import { Box, Heading, ChakraProvider, HStack } from "@chakra-ui/react";
 
 import useSWR, { SWRConfig } from "swr";
 
@@ -23,7 +16,6 @@ const AppBody: React.FC<React.PropsWithChildren> = ({ children }) => (
 
 const App = () => {
   const { data } = useSWR("PHI", discutextApi.getLatestDiscussion);
-  const validAt = data?.valid_at ? new Date(data.valid_at) : undefined;
   return (
     <ChakraProvider>
       <SWRConfig
@@ -40,8 +32,7 @@ const App = () => {
           justifyContent="space-between"
           height={`${HEADER_HEIGHT_PX}px`}
         >
-          <Heading>DiscuText {data?.wfo_id ? `: ${data.wfo_id}` : ""}</Heading>
-          {validAt && <Text>Valid: {validAt.toLocaleString()}</Text>}
+          <Heading>DiscuText</Heading>
         </HStack>
         <AppBody>{data && <DiscussionDetail discussion={data} />}</AppBody>
       </SWRConfig>

@@ -1,10 +1,28 @@
 import React from "react";
-import { Box, Heading, ChakraProvider, HStack } from "@chakra-ui/react";
 
+import { Box, ChakraProvider, Heading, HStack } from "@chakra-ui/react";
+import {
+  createBrowserRouter,
+  Navigate,
+  RouterProvider,
+} from "react-router-dom";
 import useSWR, { SWRConfig } from "swr";
 
+import OfficeSearchDrawer from "./components/OfficeSearchDrawer";
 import discutextApi from "./discutext-api";
+import { NWSOffice } from "./discutext-api/models";
 import DiscussionDetail from "./views/DiscussionDetail";
+
+const router = createBrowserRouter([
+  {
+    path: "/discussion/:wfoId",
+    element: <DiscussionDetail />,
+  },
+  {
+    path: "/",
+    element: <Navigate to="/discussion/PHI" replace />,
+  },
+]);
 
 const HEADER_HEIGHT_PX = 80;
 
@@ -14,8 +32,12 @@ const AppBody: React.FC<React.PropsWithChildren> = ({ children }) => (
   </Box>
 );
 
+const nwsOfficeFetcher = async (): Promise<NWSOffice[]> => {
+  return await discutextApi.getOffices();
+};
+
 const App = () => {
-  const { data } = useSWR("PHI", discutextApi.getLatestDiscussion);
+  const { data: offices } = useSWR("NWSOFFICES", nwsOfficeFetcher);
   return (
     <ChakraProvider>
       <SWRConfig
@@ -32,9 +54,12 @@ const App = () => {
           justifyContent="space-between"
           height={`${HEADER_HEIGHT_PX}px`}
         >
-          <Heading>DiscuText</Heading>
+          <Heading size="lg">DiscuText</Heading>
+          <OfficeSearchDrawer offices={offices || []} />
         </HStack>
-        <AppBody>{data && <DiscussionDetail discussion={data} />}</AppBody>
+        <AppBody>
+          <RouterProvider router={router} />
+        </AppBody>
       </SWRConfig>
     </ChakraProvider>
   );

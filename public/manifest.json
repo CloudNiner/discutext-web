@@ -1,6 +1,6 @@
 {
   "short_name": "DiscuText",
-  "name": "DiscuText NWS Forecast Discussion Viewer",
+  "name": "DiscuText - Formatted NWS Forecast Discussions",
   "icons": {
     "24": "favicon.svg",
     "48": "favicon.svg",

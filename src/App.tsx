@@ -34,7 +34,9 @@ const App = () => {
             justifyContent="space-between"
             marginBottom={4}
           >
-            <Heading>DiscuText</Heading>
+            <Heading as="h1" size="2xl">
+              DiscuText
+            </Heading>
             <OfficeSearchDrawer />
           </HStack>
           <RouterProvider router={router} />

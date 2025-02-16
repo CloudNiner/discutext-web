@@ -5,27 +5,18 @@ import {
   HStack,
   Heading,
   Link,
-  StackDivider,
+  StackSeparator,
   Text,
   VStack,
 } from "@chakra-ui/react";
-import { useParams } from "react-router-dom";
+import { useParams } from "react-router";
 import useSWR from "swr";
 
-import RecencyDot from "../components/RecencyDot";
-import discutextApi from "../discutext-api";
-
-export const rootStackStyleProps = {
-  backgroundColor: "white",
-  spacing: 10,
-  padding: 5,
-  boxShadow: "sm",
-  borderWidth: "1px",
-  borderRadius: "lg",
-};
+import RecencyDot from "@/components/RecencyDot";
+import discutextApi from "@/discutext-api";
 
 const DiscussionDetail: React.FC = () => {
-  let { wfoId } = useParams();
+  const { wfoId } = useParams();
   const { data: discussion, error } = useSWR(
     wfoId,
     discutextApi.getLatestDiscussion
@@ -35,23 +26,16 @@ const DiscussionDetail: React.FC = () => {
     : undefined;
 
   return (
-    <Box height="100%" padding={5} backgroundColor="blue.50">
+    <Box>
       {error ? (
-        <VStack {...rootStackStyleProps}>
-          <Text>Error retrieving Forecast Discussion for "{wfoId}".</Text>
-          <Link textDecoration="underline" href="/">
-            Go back.
-          </Link>
+        <VStack>
+          <Text>Error retrieving Forecast Discussion for {wfoId}.</Text>
+          <Link href="/">Go back.</Link>
         </VStack>
       ) : discussion ? (
-        <VStack
-          divider={<StackDivider borderColor="gray" />}
-          {...rootStackStyleProps}
-        >
-          <VStack marginTop={5}>
-            <Heading as="h2" margin={0} fontSize="2xl">
-              {discussion.wfo_id}
-            </Heading>
+        <VStack gapY={4} separator={<StackSeparator />}>
+          <VStack>
+            <Heading>{discussion.wfo_id}</Heading>
             <HStack>
               <Text>Updated At: {validAt?.toLocaleString() || "--"}</Text>
               {validAt && <RecencyDot dt={validAt} />}
@@ -59,11 +43,9 @@ const DiscussionDetail: React.FC = () => {
           </VStack>
           {discussion.sections.map((s, si) => (
             <Box key={si}>
-              <Heading as="h3" fontSize="xl">
-                {s.header}
-              </Heading>
+              <Heading mb={4}>{s.header}</Heading>
               {s.paragraphs.map((p, pi) => (
-                <Text key={pi} mt={4}>
+                <Text marginY={2} key={pi}>
                   {p}
                 </Text>
               ))}

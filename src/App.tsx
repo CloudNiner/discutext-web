@@ -1,17 +1,13 @@
-import React from "react";
-
-import { Box, ChakraProvider, Heading, HStack } from "@chakra-ui/react";
-import {
-  createBrowserRouter,
-  Navigate,
-  RouterProvider,
-} from "react-router-dom";
+import { Container, Heading, HStack } from "@chakra-ui/react";
+import { createBrowserRouter, Navigate } from "react-router";
+import { RouterProvider } from "react-router/dom";
 import useSWR, { SWRConfig } from "swr";
 
-import OfficeSearchDrawer from "./components/OfficeSearchDrawer";
-import discutextApi from "./discutext-api";
-import { NWSOffice } from "./discutext-api/models";
-import DiscussionDetail from "./views/DiscussionDetail";
+import OfficeSearchDrawer from "@/components/OfficeSearchDrawer";
+import { Provider as ChakraProvider } from "@/components/ui/provider";
+import discutextApi from "@/discutext-api";
+import { NWSOffice } from "@/discutext-api/models";
+import DiscussionDetail from "@/views/DiscussionDetail";
 
 const router = createBrowserRouter([
   {
@@ -23,14 +19,6 @@ const router = createBrowserRouter([
     element: <Navigate to="/discussion/PHI" replace />,
   },
 ]);
-
-const HEADER_HEIGHT_PX = 80;
-
-const AppBody: React.FC<React.PropsWithChildren> = ({ children }) => (
-  <Box height={`calc(100vh - ${HEADER_HEIGHT_PX}px)`} overflow="auto">
-    {children}
-  </Box>
-);
 
 const nwsOfficeFetcher = async (): Promise<NWSOffice[]> => {
   return await discutextApi.getOffices();
@@ -47,19 +35,13 @@ const App = () => {
           revalidateOnFocus: false,
         }}
       >
-        <HStack
-          backgroundColor="blue.100"
-          padding="5"
-          alignItems="center"
-          justifyContent="space-between"
-          height={`${HEADER_HEIGHT_PX}px`}
-        >
-          <Heading size="lg">DiscuText</Heading>
-          <OfficeSearchDrawer offices={offices || []} />
-        </HStack>
-        <AppBody>
+        <Container p={8}>
+          <HStack alignItems="center" justifyContent="space-between">
+            <Heading>DiscuText</Heading>
+            <OfficeSearchDrawer offices={offices || []} />
+          </HStack>
           <RouterProvider router={router} />
-        </AppBody>
+        </Container>
       </SWRConfig>
     </ChakraProvider>
   );

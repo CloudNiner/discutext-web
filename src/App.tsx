@@ -29,7 +29,11 @@ const App = () => {
         }}
       >
         <Container p={8}>
-          <HStack alignItems="center" justifyContent="space-between">
+          <HStack
+            alignItems="center"
+            justifyContent="space-between"
+            marginBottom={4}
+          >
             <Heading>DiscuText</Heading>
             <OfficeSearchDrawer />
           </HStack>

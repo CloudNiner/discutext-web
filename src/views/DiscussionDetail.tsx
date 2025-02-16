@@ -9,7 +9,7 @@ import {
   Text,
   VStack,
 } from "@chakra-ui/react";
-import { useParams } from "react-router-dom";
+import { useParams } from "react-router";
 import useSWR from "swr";
 
 import RecencyDot from "@/components/RecencyDot";

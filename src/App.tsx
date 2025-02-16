@@ -1,12 +1,10 @@
 import { Container, Heading, HStack } from "@chakra-ui/react";
 import { createBrowserRouter, Navigate } from "react-router";
 import { RouterProvider } from "react-router/dom";
-import useSWR, { SWRConfig } from "swr";
+import { SWRConfig } from "swr";
 
 import OfficeSearchDrawer from "@/components/OfficeSearchDrawer";
 import { Provider as ChakraProvider } from "@/components/ui/provider";
-import discutextApi from "@/discutext-api";
-import { NWSOffice } from "@/discutext-api/models";
 import DiscussionDetail from "@/views/DiscussionDetail";
 
 const router = createBrowserRouter([
@@ -20,12 +18,7 @@ const router = createBrowserRouter([
   },
 ]);
 
-const nwsOfficeFetcher = async (): Promise<NWSOffice[]> => {
-  return await discutextApi.getOffices();
-};
-
 const App = () => {
-  const { data: offices } = useSWR("NWSOFFICES", nwsOfficeFetcher);
   return (
     <ChakraProvider>
       <SWRConfig
@@ -36,9 +29,15 @@ const App = () => {
         }}
       >
         <Container p={8}>
-          <HStack alignItems="center" justifyContent="space-between">
-            <Heading>DiscuText</Heading>
-            <OfficeSearchDrawer offices={offices || []} />
+          <HStack
+            alignItems="center"
+            justifyContent="space-between"
+            marginBottom={4}
+          >
+            <Heading as="h1" size="2xl">
+              DiscuText
+            </Heading>
+            <OfficeSearchDrawer />
           </HStack>
           <RouterProvider router={router} />
         </Container>

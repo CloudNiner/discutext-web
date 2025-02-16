@@ -22,3 +22,8 @@ export interface NWSOffice {
   State: string;
   WFO: string;
 }
+
+export interface NWSOfficeDetail {
+  geometry: object;
+  properties: NWSOffice;
+}

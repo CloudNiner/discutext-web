@@ -1,4 +1,4 @@
-import { Discussion, NWSOffice } from "./models";
+import { Discussion, NWSOffice, NWSOfficeDetail } from "./models";
 
 class DiscutextApi {
   readonly apiUrl: string;
@@ -14,6 +14,11 @@ class DiscutextApi {
   getOffices = async (): Promise<NWSOffice[]> => {
     const response = await fetch(`${this.apiUrl}/nws-office`);
     return response.json() as Promise<NWSOffice[]>;
+  };
+
+  getOffice = async (wfoId: string): Promise<NWSOfficeDetail> => {
+    const response = await fetch(`${this.apiUrl}/nws-office/${wfoId}`);
+    return response.json() as Promise<NWSOfficeDetail>;
   };
 }
 

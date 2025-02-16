@@ -12,29 +12,33 @@ const TooltipLabel = memo(() => (
     <p>Red: Updated more than 6 hrs ago.</p>
   </>
 ));
+TooltipLabel.displayName = "TooltipLabel";
 
 interface RecencyDotProps {
   dt: Date;
 }
 
-const RecencyDot: React.FC<RecencyDotProps> = React.memo(({ dt }) => {
-  const color = useMemo(() => {
-    const diffInSeconds = Math.abs(new Date().getTime() - dt.getTime());
-    let color = "red";
-    if (diffInSeconds < 60 * 60 * 3 * 1000) {
-      color = "green";
-    } else if (diffInSeconds < 60 * 60 * 6 * 1000) {
-      color = "yellow";
-    }
-    return color;
-  }, [dt]);
-  return (
-    <Tooltip showArrow content={<TooltipLabel />}>
-      <Circle color={color}>
-        <FaClock />
-      </Circle>
-    </Tooltip>
-  );
-});
+const RecencyDot: React.FC<RecencyDotProps> = React.memo(
+  ({ dt }: RecencyDotProps) => {
+    const color = useMemo(() => {
+      const diffInSeconds = Math.abs(new Date().getTime() - dt.getTime());
+      let color = "red";
+      if (diffInSeconds < 60 * 60 * 3 * 1000) {
+        color = "green";
+      } else if (diffInSeconds < 60 * 60 * 6 * 1000) {
+        color = "yellow";
+      }
+      return color;
+    }, [dt]);
+    return (
+      <Tooltip showArrow content={<TooltipLabel />}>
+        <Circle color={color}>
+          <FaClock />
+        </Circle>
+      </Tooltip>
+    );
+  }
+);
+RecencyDot.displayName = "RecencyDot";
 
 export default RecencyDot;

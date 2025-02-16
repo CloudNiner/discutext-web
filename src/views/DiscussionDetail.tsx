@@ -16,7 +16,7 @@ import RecencyDot from "@/components/RecencyDot";
 import discutextApi from "@/discutext-api";
 
 const DiscussionDetail: React.FC = () => {
-  let { wfoId } = useParams();
+  const { wfoId } = useParams();
   const { data: discussion, error } = useSWR(
     wfoId,
     discutextApi.getLatestDiscussion
@@ -29,7 +29,7 @@ const DiscussionDetail: React.FC = () => {
     <Box>
       {error ? (
         <VStack>
-          <Text>Error retrieving Forecast Discussion for "{wfoId}".</Text>
+          <Text>Error retrieving Forecast Discussion for {wfoId}.</Text>
           <Link href="/">Go back.</Link>
         </VStack>
       ) : discussion ? (

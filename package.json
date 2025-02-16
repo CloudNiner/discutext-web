@@ -15,15 +15,10 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "rsbuild dev --host localhost",
     "build": "rsbuild build",
-    "preview": "rsbuild preview"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
+    "lint": "eslint src",
+    "preview": "rsbuild preview",
+    "start": "rsbuild dev --host localhost"
   },
   "browserslist": {
     "production": [
@@ -38,10 +33,15 @@
     ]
   },
   "devDependencies": {
+    "@eslint/js": "^9.20.0",
     "@rsbuild/core": "^1.2.8",
     "@rsbuild/plugin-react": "^1.1.0",
     "@types/node": "^16.18.126",
     "@types/react": "^18.3.18",
-    "@types/react-dom": "^18.3.5"
+    "@types/react-dom": "^18.3.5",
+    "eslint": "^9.20.1",
+    "eslint-plugin-react": "^7.37.4",
+    "globals": "^15.15.0",
+    "typescript-eslint": "^8.24.0"
   }
 }

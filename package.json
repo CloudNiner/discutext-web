@@ -15,7 +15,7 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "rsbuild dev",
+    "start": "rsbuild dev --host localhost",
     "build": "rsbuild build",
     "preview": "rsbuild preview"
   },

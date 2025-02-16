@@ -41,6 +41,7 @@
     "@types/react-dom": "^19.0.3",
     "eslint": "^9.20.1",
     "eslint-plugin-react": "^7.37.4",
+    "eslint-plugin-react-compiler": "^19.0.0-beta-30d8a17-20250209",
     "globals": "^15.15.0",
     "typescript-eslint": "^8.24.0"
   }

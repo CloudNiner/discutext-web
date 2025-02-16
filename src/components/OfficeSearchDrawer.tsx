@@ -4,12 +4,13 @@ import {
   Button,
   DrawerBody,
   DrawerContent,
-  DrawerFooter,
   DrawerHeader,
   DrawerPositioner,
   DrawerRoot,
+  HStack,
   Input,
   Spinner,
+  Text,
   VStack,
 } from "@chakra-ui/react";
 import { FaArrowRight, FaMagnifyingGlass } from "react-icons/fa6";
@@ -58,11 +59,19 @@ const OfficeSearchDrawer: React.FC = () => {
       </DrawerTrigger>
       <DrawerPositioner>
         <DrawerContent>
-          <DrawerHeader>Search NWS Offices</DrawerHeader>
+          <DrawerHeader>
+            <HStack justifyContent="space-between">
+              <Text>Search NWS Offices</Text>
+              <DrawerActionTrigger asChild>
+                <Button variant="outline">Close</Button>
+              </DrawerActionTrigger>
+            </HStack>
+          </DrawerHeader>
           <DrawerBody>
             <InputGroup
               flex="1"
               endElement={isLoading ? <Spinner /> : undefined}
+              width="100%"
             >
               <Input
                 value={searchValue}
@@ -82,13 +91,6 @@ const OfficeSearchDrawer: React.FC = () => {
               ))}
             </VStack>
           </DrawerBody>
-          <DrawerFooter>
-            <DrawerActionTrigger asChild>
-              <Button variant="outline" mr={3}>
-                Close
-              </Button>
-            </DrawerActionTrigger>
-          </DrawerFooter>
         </DrawerContent>
       </DrawerPositioner>
     </DrawerRoot>

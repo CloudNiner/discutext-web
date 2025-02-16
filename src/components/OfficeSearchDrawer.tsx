@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useCallback, useMemo, useState } from "react";
+import React, { ChangeEvent, useState } from "react";
 
 import {
   Button,
@@ -27,12 +27,9 @@ interface OfficeSearchDrawerProps {
 const OfficeSearchDrawer: React.FC<OfficeSearchDrawerProps> = ({ offices }) => {
   const [searchValue, setSearchValue] = useState("");
   const [open, setOpen] = useState(false);
-  const onSearchChange = useCallback(
-    (event: ChangeEvent<HTMLInputElement>) =>
-      setSearchValue(event.target.value),
-    [setSearchValue]
-  );
-  const searchOffices = useMemo(() => {
+  const onSearchChange = (event: ChangeEvent<HTMLInputElement>) =>
+    setSearchValue(event.target.value);
+  const searchOffices = () => {
     if (searchValue.length < 2) {
       return [];
     }
@@ -43,7 +40,7 @@ const OfficeSearchDrawer: React.FC<OfficeSearchDrawerProps> = ({ offices }) => {
         office.CityState.toLowerCase().includes(searchValueLower)
       );
     });
-  }, [offices, searchValue]);
+  };
 
   return (
     <DrawerRoot open={open} onOpenChange={(e) => setOpen(e.open)}>
@@ -64,7 +61,7 @@ const OfficeSearchDrawer: React.FC<OfficeSearchDrawerProps> = ({ offices }) => {
               onChange={onSearchChange}
             />
             <VStack alignItems="flex-start">
-              {searchOffices.map((office) => (
+              {searchOffices().map((office) => (
                 <Button variant="plain" key={office.CWA}>
                   <a href={`/discussion/${office.CWA}`}>
                     {office.CWA}: {office.CityState}

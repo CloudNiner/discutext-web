@@ -37,7 +37,7 @@ const DiscussionDetail: React.FC = () => {
           <VStack>
             <Heading>{discussion.wfo_id}</Heading>
             <HStack>
-              <Text>Updated At: {validAt?.toLocaleString() || "--"}</Text>
+              <Text>Updated: {validAt?.toLocaleString() || "--"}</Text>
               {validAt && <RecencyDot dt={validAt} />}
             </HStack>
           </VStack>

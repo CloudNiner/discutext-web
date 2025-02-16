@@ -1,27 +1,24 @@
-import React, {
-  ChangeEvent,
-  useCallback,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
+import React, { ChangeEvent, useCallback, useMemo, useState } from "react";
 
-import { ArrowForwardIcon, SearchIcon } from "@chakra-ui/icons";
 import {
   Button,
-  Drawer,
   DrawerBody,
-  DrawerCloseButton,
   DrawerContent,
   DrawerFooter,
   DrawerHeader,
-  DrawerOverlay,
+  DrawerPositioner,
+  DrawerRoot,
   Input,
   VStack,
-  useDisclosure,
 } from "@chakra-ui/react";
+import { FaArrowRight, FaMagnifyingGlass } from "react-icons/fa6";
 
-import { NWSOffice } from "../discutext-api/models";
+import {
+  DrawerActionTrigger,
+  DrawerBackdrop,
+  DrawerTrigger,
+} from "@/components/ui/drawer";
+import { NWSOffice } from "@/discutext-api/models";
 
 interface OfficeSearchDrawerProps {
   offices: NWSOffice[];
@@ -29,9 +26,7 @@ interface OfficeSearchDrawerProps {
 
 const OfficeSearchDrawer: React.FC<OfficeSearchDrawerProps> = ({ offices }) => {
   const [searchValue, setSearchValue] = useState("");
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  const drawerSearchButtonRef = useRef<HTMLButtonElement>(null);
-  const drawerSearchInputRef = useRef<HTMLInputElement>(null);
+  const [open, setOpen] = useState(false);
   const onSearchChange = useCallback(
     (event: ChangeEvent<HTMLInputElement>) =>
       setSearchValue(event.target.value),
@@ -51,57 +46,44 @@ const OfficeSearchDrawer: React.FC<OfficeSearchDrawerProps> = ({ offices }) => {
   }, [offices, searchValue]);
 
   return (
-    <>
-      <Button
-        leftIcon={<SearchIcon />}
-        ref={drawerSearchButtonRef}
-        onClick={onOpen}
-      >
-        Search
-      </Button>
-      <Drawer
-        isOpen={isOpen}
-        placement="right"
-        size="md"
-        onClose={onClose}
-        finalFocusRef={drawerSearchButtonRef}
-        initialFocusRef={drawerSearchInputRef}
-      >
-        <DrawerOverlay />
+    <DrawerRoot open={open} onOpenChange={(e) => setOpen(e.open)}>
+      <DrawerBackdrop />
+      <DrawerTrigger asChild>
+        <Button>
+          <FaMagnifyingGlass />
+          Search
+        </Button>
+      </DrawerTrigger>
+      <DrawerPositioner>
         <DrawerContent>
-          <DrawerCloseButton />
           <DrawerHeader>Search NWS Offices</DrawerHeader>
-
-          <DrawerBody overflowX="hidden">
+          <DrawerBody>
             <Input
               value={searchValue}
               placeholder="Search by ID, City, or State"
               onChange={onSearchChange}
-              ref={drawerSearchInputRef}
             />
-            <VStack marginX={1} marginY={5} alignItems="flex-start">
+            <VStack alignItems="flex-start">
               {searchOffices.map((office) => (
-                <Button
-                  as="a"
-                  href={`/discussion/${office.CWA}`}
-                  key={office.CWA}
-                  variant="link"
-                  rightIcon={<ArrowForwardIcon />}
-                >
-                  {office.CWA}: {office.CityState}
+                <Button variant="plain" key={office.CWA}>
+                  <a href={`/discussion/${office.CWA}`}>
+                    {office.CWA}: {office.CityState}
+                  </a>
+                  <FaArrowRight />
                 </Button>
               ))}
             </VStack>
           </DrawerBody>
-
           <DrawerFooter>
-            <Button variant="outline" mr={3} onClick={onClose}>
-              Close
-            </Button>
+            <DrawerActionTrigger asChild>
+              <Button variant="outline" mr={3}>
+                Close
+              </Button>
+            </DrawerActionTrigger>
           </DrawerFooter>
         </DrawerContent>
-      </Drawer>
-    </>
+      </DrawerPositioner>
+    </DrawerRoot>
   );
 };
 

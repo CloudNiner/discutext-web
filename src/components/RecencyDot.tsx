@@ -1,7 +1,9 @@
 import React, { memo, useMemo } from "react";
 
-import { TimeIcon } from "@chakra-ui/icons";
-import { Circle, Tooltip } from "@chakra-ui/react";
+import { Circle } from "@chakra-ui/react";
+import { FaClock } from "react-icons/fa6";
+
+import { Tooltip } from "@/components/ui/tooltip";
 
 const TooltipLabel = memo(() => (
   <>
@@ -27,9 +29,9 @@ const RecencyDot: React.FC<RecencyDotProps> = React.memo(({ dt }) => {
     return color;
   }, [dt]);
   return (
-    <Tooltip hasArrow label={<TooltipLabel />}>
+    <Tooltip showArrow content={<TooltipLabel />}>
       <Circle color={color}>
-        <TimeIcon />
+        <FaClock />
       </Circle>
     </Tooltip>
   );
